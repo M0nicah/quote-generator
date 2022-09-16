@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quote Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-800 h-screen w-full">
+    <div class="container justify-center items-center mx-auto flex-col flex h-screen">
+      <div class="bg-white w-1/2 h-auto inline-block p-4 rounded-2xl shadow-xl">
+        <h1 class="text-center mt-3 font-serif font-bold">Quote of the Day</h1>
+        <p class="mt-3 font-extralight text-center" id="quote"></span></p>
+        <div class="">
+          <blockquote class="text-xs italic font-extralight mt-3 justify-center text-yellow-600 items-center mx-auto flex" id="author"></blockquote>
+        </div>
+      </div>
+      <div>
+        <button
+            type="submit"
+            class="bg-blue-400 text-white rounded-2xl p-3 text-center text-sm mt-3 w-72"
+            id="btn"
+          >
+            New Quote
+        </button>
+      </div>
+      
+    </div>
+
+    <script>
+        let quotes = {}
+        fetch("https://type.fit/api/quotes")
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+            quotes = data
+            getQuote()
+            })
+
+        document.getElementById("btn").addEventListener("click", function gen(){
+                getQuote()
+        });
+
+        const getQuote = () => {
+            const quote = quotes[Math.floor(Math.random() * 1200)];
+                document.getElementById("quote").innerHTML = quote.text;
+                document.getElementById("author").innerHTML = `~ ${quote.author}`;
+            }
+      
+    </script>
+  </body>
+</html>
